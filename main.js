@@ -224,14 +224,23 @@ const posts = [
 //|mi come su our team mi prendo il container padre che wrappa tutto
 //? mi cro una funzione come su our team chemi crei il singolo post, poi conun foreach me li stampo
 
-posts.forEach(element => {
+/* posts.forEach(element => {
     if (element.author.image == null) {
         console.log('nessuna immagine autore');
     } else {
         console.log('immagine autore presente');
     }
-});
+}); */
 
+
+console.log((posts[19].author.name).split(' '))
+function prova(xyz) {
+    const prova = xyz.author.name.split(' ');//! senza spazio mi prende il carattere alla posizione 1
+    const prova1 = prova[0].charAt(0).toUpperCase() + prova[1].charAt(0).toUpperCase();
+    return prova1
+}
+
+console.log(prova(posts[19]));
 /* function createPost(singlePost) {
     //contenitore principale per l'haeder del post
     const post = document.createElement('div');
@@ -247,6 +256,15 @@ posts.forEach(element => {
     postMetaIcon.classList.add('post-meta_icon');
     // sottoinsieme di postmetaicon
     // ? bisogna creare una condizione per l'immagine profilo, nel caso in cui non ci sia, aggiungere le iniziali.
+    if (singlePost.author.image !== null) {
+        const postImageAuthor = document.createElement('img');
+        postImageAuthor.classList.add('profile-pic');
+        postImageAuthor.src = singlePost.image;
+        postImageAuthor.alt = `image profile of ${singlePost.name}`
+        postMetaIcon.appendChild(postImageAuthor);
+    } else {
+        const initials =
+    }
 } */
 
 /* <!-- post di esempio/template, da togliere/commentare e generare da JS -->
