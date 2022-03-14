@@ -198,7 +198,7 @@ const posts = [
         "created": "2021-05-15"
     },
     {
-        "id": 130,
+        "id": 19,
         "content": "Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.",
         "media": "https://unsplash.it/600/400?image=24",
         "author": {
@@ -224,10 +224,15 @@ const posts = [
 //|mi come su our team mi prendo il container padre che wrappa tutto
 //? mi cro una funzione come su our team chemi crei il singolo post, poi conun foreach me li stampo
 
+posts.forEach(element => {
+    if (element.author.image == null) {
+        console.log('nessuna immagine autore');
+    } else {
+        console.log('immagine autore presente');
+    }
+});
 
-
-
-function createPost(singlePost) {
+/* function createPost(singlePost) {
     //contenitore principale per l'haeder del post
     const post = document.createElement('div');
     post.classList.add('post');
@@ -242,8 +247,7 @@ function createPost(singlePost) {
     postMetaIcon.classList.add('post-meta_icon');
     // sottoinsieme di postmetaicon
     // ? bisogna creare una condizione per l'immagine profilo, nel caso in cui non ci sia, aggiungere le iniziali.
-
-}
+} */
 
 /* <!-- post di esempio/template, da togliere/commentare e generare da JS -->
 <div class="post">
