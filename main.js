@@ -242,6 +242,7 @@ function prova(xyz) {
 }
 console.log(prova(posts[19]));
 */
+const wrapper = document.getElementById('container');
 
 function createPost(singlePost) {
     //contenitore principale per l'haeder del post
@@ -250,7 +251,7 @@ function createPost(singlePost) {
 
     // sottoclasse post
     const postHeader = document.createElement('div');
-    postHeader.classList.add('post_header');
+    postHeader.classList.add('post__header');
     post.appendChild(postHeader);
 
     // sootoclasse di post_header
@@ -260,7 +261,7 @@ function createPost(singlePost) {
 
     // sottoinsieme di post-meta
     const postMetaIcon = document.createElement('div');
-    postMetaIcon.classList.add('post-meta_icon');
+    postMetaIcon.classList.add('post-meta__icon');
     postMeta.appendChild(postMetaIcon);
 
     // sottoinsieme di postmetaicon
@@ -268,8 +269,8 @@ function createPost(singlePost) {
     if (singlePost.author.image !== null) {
         const postImageAuthor = document.createElement('img');
         postImageAuthor.classList.add('profile-pic');
-        postImageAuthor.src = singlePost.image;
-        postImageAuthor.alt = `image profile of ${singlePost.name}`
+        postImageAuthor.src = singlePost.author.image;
+        postImageAuthor.alt = `image profile of ${singlePost.author.name}`
         postMetaIcon.appendChild(postImageAuthor);
     } else {
         const splitName = singlePost.author.name.split(' ');
@@ -279,9 +280,9 @@ function createPost(singlePost) {
         profilePicDefault.innerHTML = initials;
         postMetaIcon.appendChild(profilePicDefault);
     }
-    //sottoinsieme di post-meta, fratello di post-icon
+
     const postMetaData = document.createElement('div');
-    postMetaData.classList.add('post-meta_data');
+    postMetaData.classList.add('post-meta__data');
     postMeta.appendChild(postMetaData);
 
     //sottoinsieme di postMetadata
@@ -289,18 +290,57 @@ function createPost(singlePost) {
     postMetaAuthor.classList.add('post-meta__author');
     postMetaAuthor.innerHTML = singlePost.author.name;
     postMetaData.appendChild(postMetaAuthor);
+
     //fratello di post meta author
     const postMetaTime = document.createElement('div');
     postMetaTime.classList.add('post-meta__time');
-    postMetaTime.appendChild(postMetaAuthor);
+    postMetaData.appendChild(postMetaTime);
+
+    // sottoinsieme di post fratello di post-header
+    const postTxt = document.createElement('div');
+    postTxt.classList.add('post__text');
+    postTxt.innerHTML = singlePost.content;
+    post.appendChild(postTxt);
+
+    // idem
+    const postImage = document.createElement('div');
+    postImage.classList.add('post__image');
+    post.appendChild(postImage);
+
+    //figlio di postimage
+    const imageItem = document.createElement('img');
+    imageItem.src = singlePost.media;
+    imageItem.alt = 'randompick from unsplash.it';
+    postImage.appendChild(imageItem);
+
+    //footer_post figlio di post
+    const postFooter = document.createElement('div');
+    postFooter.classList.add('post__footer');
+    post.appendChild(postFooter);
+
+    //likes figlio di footer
+    const likes = document.createElement('div');
+    likes.classList.add('likes' , 'js-likes');
+    postFooter.appendChild(likes);
+
+    //figlio di likes
+    const likesCta = document.createElement('div');
+    likesCta.classList.add('likes__cta');
+    likes.appendChild(likesCta);
+
+    //a figlio di likesCta
+    const likeBtn = document.createElement('a');
+    likeBtn.classList.add('like-button', 'js-like-button');
+    likeBtn.href = '#';
+
+    likesCta.appendChild(likeBtn);
+
+
+    return post;
 }
 
 /* <!-- post di esempio/template, da togliere/commentare e generare da JS -->
 <div class="post">
-    <div class="post__text">Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.</div>
-    <div class="post__image">
-        <img src="https://unsplash.it/600/300?image=171" alt="">
-    </div>
     <div class="post__footer">
         <div class="likes js-likes">
             <div class="likes__cta">
@@ -315,3 +355,7 @@ function createPost(singlePost) {
         </div>
     </div>
 </div> */
+
+posts.forEach((post) => {
+    wrapper.appendChild(createPost(post));
+});
