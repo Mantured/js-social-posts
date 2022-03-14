@@ -233,27 +233,36 @@ const posts = [
 }); */
 
 
+/*
 console.log((posts[19].author.name).split(' '))
 function prova(xyz) {
     const prova = xyz.author.name.split(' ');//! senza spazio mi prende il carattere alla posizione 1
     const prova1 = prova[0].charAt(0).toUpperCase() + prova[1].charAt(0).toUpperCase();
     return prova1
 }
-
 console.log(prova(posts[19]));
-/* function createPost(singlePost) {
+*/
+
+function createPost(singlePost) {
     //contenitore principale per l'haeder del post
     const post = document.createElement('div');
     post.classList.add('post');
+
     // sottoclasse post
     const postHeader = document.createElement('div');
     postHeader.classList.add('post_header');
+    post.appendChild(postHeader);
+
     // sootoclasse di post_header
     const postMeta = document.createElement('div');
     postMeta.classList.add('post-meta');
+    postHeader.appendChild(postMeta);
+
     // sottoinsieme di post-meta
     const postMetaIcon = document.createElement('div');
     postMetaIcon.classList.add('post-meta_icon');
+    postMeta.appendChild(postMetaIcon);
+
     // sottoinsieme di postmetaicon
     // ? bisogna creare una condizione per l'immagine profilo, nel caso in cui non ci sia, aggiungere le iniziali.
     if (singlePost.author.image !== null) {
@@ -263,23 +272,31 @@ console.log(prova(posts[19]));
         postImageAuthor.alt = `image profile of ${singlePost.name}`
         postMetaIcon.appendChild(postImageAuthor);
     } else {
-        const initials =
+        const splitName = singlePost.author.name.split(' ');
+        const initials = splitName[0].charAt(0).toUpperCase() + splitName[1].charAt(0).toUpperCase();
+        const profilePicDefault = document.createElement('h3');
+        profilePicDefault.classList.add('profile-pic-default');
+        profilePicDefault.innerHTML = initials;
+        postMetaIcon.appendChild(profilePicDefault);
     }
-} */
+    //sottoinsieme di post-meta, fratello di post-icon
+    const postMetaData = document.createElement('div');
+    postMetaData.classList.add('post-meta_data');
+    postMeta.appendChild(postMetaData);
+
+    //sottoinsieme di postMetadata
+    const postMetaAuthor = document.createElement('div');
+    postMetaAuthor.classList.add('post-meta__author');
+    postMetaAuthor.innerHTML = singlePost.author.name;
+    postMetaData.appendChild(postMetaAuthor);
+    //fratello di post meta author
+    const postMetaTime = document.createElement('div');
+    postMetaTime.classList.add('post-meta__time');
+    postMetaTime.appendChild(postMetaAuthor);
+}
 
 /* <!-- post di esempio/template, da togliere/commentare e generare da JS -->
 <div class="post">
-    <div class="post__header">
-        <div class="post-meta">
-            <div class="post-meta__icon">
-                <img class="profile-pic" src="https://unsplash.it/300/300?image=15" alt="Phil Mangione">
-            </div>
-            <div class="post-meta__data">
-                <div class="post-meta__author">Phil Mangione</div>
-                <div class="post-meta__time">4 mesi fa</div>
-            </div>
-        </div>
-    </div>
     <div class="post__text">Placeat libero ipsa nobis ipsum quibusdam quas harum ut. Distinctio minima iusto. Ad ad maiores et sint voluptate recusandae architecto. Et nihil ullam aut alias.</div>
     <div class="post__image">
         <img src="https://unsplash.it/600/300?image=171" alt="">
