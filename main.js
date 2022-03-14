@@ -294,6 +294,7 @@ function createPost(singlePost) {
     //fratello di post meta author
     const postMetaTime = document.createElement('div');
     postMetaTime.classList.add('post-meta__time');
+    postMetaTime.innerHTML = new Date(singlePost.created).toLocaleDateString("it-IT"); //oopure eu UE
     postMetaData.appendChild(postMetaTime);
 
     // sottoinsieme di post fratello di post-header
@@ -331,31 +332,39 @@ function createPost(singlePost) {
     //a figlio di likesCta
     const likeBtn = document.createElement('a');
     likeBtn.classList.add('like-button', 'js-like-button');
-    likeBtn.href = '#';
+    likeBtn.innerHTML = `<a data-postid="${singlePost.id}">
+                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span></a>`
 
     likesCta.appendChild(likeBtn);
 
+    // likes counter fratello di likesCTA
+    const likesCounter = document.createElement('div');
+    likesCounter.classList.add('likes__counter');
+    likesCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${singlePost.likes}</b> persone`;
+    likes.appendChild(likesCounter);
 
     return post;
 }
 
-/* <!-- post di esempio/template, da togliere/commentare e generare da JS -->
-<div class="post">
-    <div class="post__footer">
-        <div class="likes js-likes">
+/*
             <div class="likes__cta">
                 <a class="like-button  js-like-button" href="#" data-postid="1">
                     <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                     <span class="like-button__label">Mi Piace</span>
                 </a>
             </div>
-            <div class="likes__counter">
-                Piace a <b id="like-counter-1" class="js-likes-counter">80</b> persone
-            </div>
-        </div>
-    </div>
-</div> */
+*/
 
 posts.forEach((post) => {
     wrapper.appendChild(createPost(post));
 });
+
+
+document.querySelectorAll('.like-button').forEach((btn, i ) => {
+    btn.addEventListener('click', (event) => {
+        event.currentTarget.classList.toggle('like-button--liked');
+            console.log(event, i);
+        });
+})
+
