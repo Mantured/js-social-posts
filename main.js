@@ -332,39 +332,71 @@ function createPost(singlePost) {
     //a figlio di likesCta
     const likeBtn = document.createElement('a');
     likeBtn.classList.add('like-button', 'js-like-button');
-    likeBtn.innerHTML = `<a data-postid="${singlePost.id}">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span></a>`
+    likeBtn['data-posteid'] = singlePost.id;
+    likeBtn.innerHTML = `<i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                        <span class="like-button__label">Mi Piace</span>`
 
     likesCta.appendChild(likeBtn);
 
     // likes counter fratello di likesCTA
     const likesCounter = document.createElement('div');
     likesCounter.classList.add('likes__counter');
-    likesCounter.innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${singlePost.likes}</b> persone`;
+    likesCounter.innerHTML = `Piace a <b id="like-counter-${singlePost.id}" class="js-likes-counter">${singlePost.likes}</b> persone`;
     likes.appendChild(likesCounter);
 
     return post;
 }
 
-/*
-            <div class="likes__cta">
-                <a class="like-button  js-like-button" href="#" data-postid="1">
-                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                    <span class="like-button__label">Mi Piace</span>
-                </a>
-            </div>
-*/
-
 posts.forEach((post) => {
     wrapper.appendChild(createPost(post));
 });
 
+//array per i like
+postLiked = [];
+const likeCounters = document.querySelectorAll(`.js-likes-counter`);
+const likeButtons = document.querySelectorAll(`.js-like-button`);
 
-document.querySelectorAll('.like-button').forEach((btn, i ) => {
+for (let i = 0 ; i < likeButtons.length ; i++){
+    const element = likeButtons[i];
+
+    console.warn(element);
+    element.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        if ( element.classList.contains('like-button--liked') ){
+            element.classList.remove('like-button--liked');
+
+            // mi prendo il counter attuale dei like
+            likeCounters[i].innerHTML = parseInt(likeCounters[i].innerHTML) - 1;
+            postLiked.splice( postLiked.indexOf(likeButtons[i].getAttribute('data-postid') ));
+
+        } else {
+            element.classList.add('like-button--liked');
+
+            // mi prendo il counter attuale dei like
+            likeCounters[i].innerHTML = parseInt(likeCounters[i].innerHTML) + 1;
+            postLiked.push(likeButtons[i].getAttribute('data-postid'));
+        }
+    })
+}
+
+//currentTarget = The currentTarget read-only property of the Event interface identifies the current target for the event, as the event traverses the DOM. It always refers to the element to which the event handler has been attached, as opposed to Event.target, which identifies the element on which the event occurred and which may be its descendant.
+
+/* document.querySelectorAll('.like-button').forEach((btn, i) => {
     btn.addEventListener('click', (event) => {
         event.currentTarget.classList.toggle('like-button--liked');
-            console.log(event, i);
-        });
+        console.log(event, i);
+
+        (event.currentTarget.classList.contains('like-button--liked')) ? postLiked.push(event.currentTarget) :
+            id: ""​
+            innerHTML: "<i class=\"like-button__icon fas fa-thumbs-up\" aria-hidden=\"true\"></i>\n<span class=\"like-button__label\">Mi Piace</span>"​
+            innerText: " Mi Piace"​
+            inputMode: ""
+
+            console.log(postLiked);
+    });
 })
+*/
+
+
 
